@@ -1,30 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class StateMachine
+﻿public class StateMachine
 {
-    public IState currentState;
+    public BaseState currentState;
 
-    public void ChangeState(IState newState)
+    public void ChangeState(BaseState newState)
     {
-        if (currentState != null)
-            currentState.Exit();
-
+        currentState?.OnDisable();
         currentState = newState;
-        currentState.Enter();
+        currentState.OnEnable();
     }
 
-    public void Update()
-    {
-        if (currentState != null)
-            currentState.Excute();
-    }
-
-    public void FixedUpdate()
-    {
-        if (currentState != null)
-            currentState.ExcutePhysics();
-    }
-
+    public void Update() => currentState?.Update();
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class AntController : MonoBehaviour
+public class Ant : MonoBehaviour
 {
     private readonly StateMachine stateMachine = new StateMachine();
 
@@ -9,12 +9,7 @@ public class AntController : MonoBehaviour
         stateMachine.Update();
     }
 
-    public void FixedUpdateState()
-    {
-        stateMachine.FixedUpdate();
-    }
-
-    public void RequestState(IState requestedState)
+    public void RequestState(BaseState requestedState)
     {
         if (requestedState is IdleState)
         {
@@ -27,7 +22,13 @@ public class AntController : MonoBehaviour
             if (!(stateMachine.currentState is WalkState))
                 stateMachine.ChangeState(requestedState);
         }
+
+        if (requestedState is ReturnState)
+        {
+            if (!(stateMachine.currentState is ReturnState))
+                stateMachine.ChangeState(requestedState);
+        }
     }
 
-    public IState GetState() => stateMachine.currentState;
+    public BaseState GetState() => stateMachine.currentState;
 }
