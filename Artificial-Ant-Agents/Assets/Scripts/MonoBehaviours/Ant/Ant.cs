@@ -17,9 +17,9 @@ public class Ant : MonoBehaviour
                 stateMachine.ChangeState(requestedState);
         }
 
-        if (requestedState is WalkState)
+        if (requestedState is WanderState)
         {
-            if (!(stateMachine.currentState is WalkState))
+            if (!(stateMachine.currentState is WanderState))
                 stateMachine.ChangeState(requestedState);
         }
 
