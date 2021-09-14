@@ -7,5 +7,5 @@ public class NestInfo : MonoBehaviour, IInfo
 
     private void Awake() => nest = GetComponent<Nest>();
 
-    public string GetInfo() => $"This nest has: {nest.ants.Count.ToString()} ants";
+    public string GetInfo() => $"Ants: {nest.ants.Count.ToString()}\nFoods: {nest.foodCount}";
 }

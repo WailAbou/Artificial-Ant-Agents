@@ -8,7 +8,6 @@ public abstract class BaseState
     protected Transform transform;
 
     protected float wanderStrength = 0.1f;
-    private float maxSpeed = 2;
     private float steerStrenth = 2;
 
     protected Vector2 velocity;
@@ -36,7 +35,7 @@ public abstract class BaseState
         return closest != null ? closest.GetComponent<T>() : default(T);
     }
 
-    protected void Move(Vector2 direction)
+    protected void Move(Vector2 direction, float maxSpeed = 2.0f)
     {
         if (transform.position.x > 17 || transform.position.x < -17 ||
             transform.position.y > 9 || transform.position.y < -9) direction = (Vector2.zero - (Vector2)transform.position);
