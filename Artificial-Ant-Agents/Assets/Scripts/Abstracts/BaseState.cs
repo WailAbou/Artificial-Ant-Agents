@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Linq;
+using System.Linq.Expressions;
+using System;
 
 public abstract class BaseState
 {
@@ -27,11 +29,19 @@ public abstract class BaseState
     public virtual void Update() { }
     public virtual void OnDisable() { }
 
-    protected T Check<T>(float radius = 1.0f)
+    protected T CheckItem<T>(float radius = 1.0f, Func<T, bool> filter = null)
     {
+        filter = filter ?? (T => true);
+
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius);
-        Transform[] transforms = colliders.Where(c => c.GetComponent<T>() != null).Select(c => c.transform).ToArray();
+
+        Transform[] transforms = colliders
+            .Where(collider => collider.GetComponent<T>() != null)
+            .Where(collider => filter(collider.GetComponent<T>()))
+            .Select(collider => collider.transform).ToArray();
+
         Transform closest = transforms.OrderBy(t => Vector3.Distance(transform.position, t.position)).FirstOrDefault();
+
         return closest != null ? closest.GetComponent<T>() : default(T);
     }
 

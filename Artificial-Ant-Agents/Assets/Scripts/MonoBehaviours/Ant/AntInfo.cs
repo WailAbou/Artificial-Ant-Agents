@@ -7,5 +7,5 @@ public class AntInfo : MonoBehaviour, IInfo
 
     private void Awake() => ant = GetComponent<Ant>();
 
-    public string GetInfo() => $"State: {ant.GetState().ToString()}";
+    public string GetInfo() => $"State: {ant?.GetState()?.ToString()}";
 }

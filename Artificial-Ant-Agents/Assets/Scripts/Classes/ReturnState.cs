@@ -7,7 +7,14 @@ public class ReturnState : BaseState
     public override void Update()
     {
         Movement();
-        CheckingHome();
+        CheckNest();
+    }
+
+    public override void OnDisable()
+    {
+        Food food = transform.GetChild(0).GetComponent<Food>();
+        food.Drop();
+        antBase.nest.foodCount++;
     }
 
     private void Movement()
@@ -16,16 +23,9 @@ public class ReturnState : BaseState
         Move(direction, 1.5f);
     }
 
-    private void CheckingHome()
+    private void CheckNest()
     {
         if (Vector2.Distance(transform.position, antBase.nest.transform.position) < 0.1f)
             ant.RequestState(new WanderState(ant, antBase, transform, velocity));
-    }
-
-    public override void OnDisable()
-    {
-        Food food = transform.GetChild(0).GetComponent<Food>();
-        food.Destroy();
-        antBase.nest.foodCount++;
     }
 }

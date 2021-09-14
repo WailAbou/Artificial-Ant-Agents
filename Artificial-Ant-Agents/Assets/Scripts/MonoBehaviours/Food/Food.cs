@@ -1,11 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Food : MonoBehaviour
 {
-    public void Destroy()
+    public bool isPickedUp;
+
+    public void Pickup(Transform parent)
     {
-        Destroy(gameObject);
+        transform.position = parent.position + parent.up;
+        transform.SetParent(parent);
+        isPickedUp = true;
     }
+
+    public void Drop() => Destroy(gameObject);
 }

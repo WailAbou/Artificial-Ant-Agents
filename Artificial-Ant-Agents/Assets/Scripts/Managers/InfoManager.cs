@@ -1,9 +1,9 @@
 using UnityEngine;
 using TMPro;
 
-public class InfoDisplay : Singleton<InfoDisplay>
+public class InfoManager : Singleton<InfoManager>
 {
-    [Header("InfoDisplay Settings")]
+    [Header("InfoManager Settings")]
     public GameObject canvas;
     public TMP_Text infoText;
 
