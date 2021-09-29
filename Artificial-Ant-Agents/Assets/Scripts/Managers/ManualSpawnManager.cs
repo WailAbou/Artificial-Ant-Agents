@@ -1,15 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnManager : Singleton<SpawnManager>
+public class ManualSpawnManager : Singleton<ManualSpawnManager>
 {
-    [Header("SpawnManager Settings")]
+    [Header("ManualSpawnManager Settings")]
     public List<SpawnItem> spawnItems = new List<SpawnItem>();
 
     private Camera mainCam;
     private Nest selectedNest;
-    private KeyCode[] keys = new KeyCode[3] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3 };
+    private KeyCode[] keys = new KeyCode[4] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4 };
 
     public override void Awake()
     {
@@ -35,7 +34,7 @@ public class SpawnManager : Singleton<SpawnManager>
 
                 switch (i)
                 {
-                    case 0:
+                    case int n when (n < 2):
                         AntBase antBase = spawnPrefab.GetComponent<AntBase>();
                         antBase.nest = selectedNest;
                         break;

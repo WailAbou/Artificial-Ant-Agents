@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Linq;
-using System.Linq.Expressions;
 using System;
 
 public abstract class BaseState
@@ -8,13 +7,13 @@ public abstract class BaseState
     protected Ant ant;
     protected AntBase antBase;
     protected Transform transform;
-
-    protected float wanderStrength = 0.1f;
-    private float steerStrenth = 2;
-
     protected Vector2 velocity;
+    protected float wanderStrength = 0.1f;
+
+    private WorldManager worldManager;
     private Vector2 position;
     private Vector2 desiredDirection;
+    private float steerStrenth = 2;
 
     public BaseState(Ant ant, AntBase antBase, Transform transform, Vector2 velocity)
     {
@@ -22,6 +21,7 @@ public abstract class BaseState
         this.antBase = antBase;
         this.transform = transform;
         this.velocity = velocity;
+        worldManager = WorldManager.Instance;
         position = transform.position;
     }
 
@@ -47,8 +47,7 @@ public abstract class BaseState
 
     protected void Move(Vector2 direction, float maxSpeed = 2.0f)
     {
-        if (transform.position.x > 17 || transform.position.x < -17 ||
-            transform.position.y > 9 || transform.position.y < -9) direction = (Vector2.zero - (Vector2)transform.position);
+        if (worldManager.OutBounds(transform.position)) direction = (Vector2.zero - (Vector2)transform.position);
 
         desiredDirection = (desiredDirection + direction).normalized;
 
