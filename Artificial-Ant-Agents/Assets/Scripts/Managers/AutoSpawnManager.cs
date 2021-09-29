@@ -41,6 +41,7 @@ public class AutoSpawnManager : Singleton<AutoSpawnManager>
                 Vector2 offset = Random.insideUnitCircle * cluster.innerSpread;
                 Vector3 spawnPos = new Vector3(x, y, 0) + new Vector3(offset.x, offset.y, 0);
                 Quaternion spawnRotation = cluster.randomRotation ? Quaternion.Euler(0, 0, Random.Range(0.0f, 360.0f)) : Quaternion.identity;
+
                 GameObject spawnObject = Instantiate(cluster.prefab, spawnPos, spawnRotation);
                 float size = Random.Range(cluster.minSize, cluster.maxSize);
                 spawnObject.transform.localScale = new Vector3(size, size, 1);
