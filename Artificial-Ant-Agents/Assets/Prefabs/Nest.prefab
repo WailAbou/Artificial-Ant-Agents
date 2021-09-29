@@ -123,8 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b8d6c3d4c4844d45afdc00381e5e8df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ants:
-  - {fileID: 0}
+  ants: []
+  foodCount: 0
 --- !u!114 &7329794007570225434
 MonoBehaviour:
   m_ObjectHideFlags: 0

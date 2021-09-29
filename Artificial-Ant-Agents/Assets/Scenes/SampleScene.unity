@@ -1340,6 +1340,8 @@ MonoBehaviour:
     holder: {fileID: 862149408}
   - prefab: {fileID: 7329794007570225437, guid: 690a3cacdbae5fe4db6fed019788e87b, type: 3}
     holder: {fileID: 989638543}
+  - prefab: {fileID: 5692436519651116628, guid: 8dafd73a34933a14291f63f46425a653, type: 3}
+    holder: {fileID: 100638361}
 --- !u!1 &1625485171
 GameObject:
   m_ObjectHideFlags: 0

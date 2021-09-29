@@ -8,7 +8,7 @@ public class ManualSpawnManager : Singleton<ManualSpawnManager>
 
     private Camera mainCam;
     private Nest selectedNest;
-    private KeyCode[] keys = new KeyCode[4] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4 };
+    private KeyCode[] keys = new KeyCode[5] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5 };
 
     public override void Awake()
     {
