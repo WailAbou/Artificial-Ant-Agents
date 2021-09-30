@@ -4,7 +4,7 @@ using System;
 
 public abstract class BaseState
 {
-    protected Ant ant;
+    protected AntStateHandler antStateHandler;
     protected AntBase antBase;
     protected Transform transform;
     protected Vector2 velocity;
@@ -15,9 +15,9 @@ public abstract class BaseState
     private Vector2 desiredDirection;
     private float steerStrenth = 2;
 
-    public BaseState(Ant ant, AntBase antBase, Transform transform, Vector2 velocity)
+    public BaseState(AntBase antBase, Transform transform, Vector2 velocity)
     {
-        this.ant = ant;
+        this.antStateHandler = antBase.antStateHandler;
         this.antBase = antBase;
         this.transform = transform;
         this.velocity = velocity;
@@ -25,9 +25,9 @@ public abstract class BaseState
         position = transform.position;
     }
 
-    public virtual void OnEnable() { }
-    public virtual void Update() { }
-    public virtual void OnDisable() { }
+    public virtual void Enable(Action OnEnable) { OnEnable?.Invoke(); }
+    public virtual void Update(Action OnUpdate) { OnUpdate?.Invoke(); }
+    public virtual void Disable(Action OnDisable) { OnDisable?.Invoke(); }
 
     protected T CheckItem<T>(float radius = 1.0f, Func<T, bool> filter = null)
     {

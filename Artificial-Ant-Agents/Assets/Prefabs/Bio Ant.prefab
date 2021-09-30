@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6498447444649477188}
   - component: {fileID: 6498447444649477241}
   - component: {fileID: 6498447444649477240}
-  - component: {fileID: 6498447444649477191}
   - component: {fileID: -3148363156569042866}
   - component: {fileID: 6498447444649477242}
   m_Layer: 0
@@ -134,18 +133,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6498447444649477191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6498447444649477187}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4d7044b2380f964aae17fe3850a2ed7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-3148363156569042866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,7 +149,7 @@ MonoBehaviour:
   lastFoodPosition: {x: 0, y: 0, z: 0}
   pheromonePrefab: {fileID: 8278626898088504267, guid: c9ba8cc4f91e3fc4faef15fd5fd36226, type: 3}
   pheromoneDistance: 1
-  pheromoneLifetime: 20
+  pheromoneLifetime: 50
 --- !u!114 &6498447444649477242
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using DG.Tweening;
 
-[RequireComponent(typeof(Ant))]
 public class AntBio : AntBase
 {
     public GameObject pheromonePrefab;
@@ -13,12 +12,22 @@ public class AntBio : AntBase
 
     private void Start()
     {
-        ant.RequestState(new WanderState(ant, this, transform, Vector2.zero));
+        antStateHandler.RequestState(new WanderState(this, transform, Vector2.zero));
         lastPheromonePosition = transform.position;
         StartCoroutine(ReleasePheromnes());
     }
 
-    private void Update() => ant.UpdateState();
+    private void Update() => antStateHandler.UpdateState(OnUpdate);
+
+    private void OnUpdate()
+    {
+        BaseState baseState = antStateHandler.GetState();
+        if (lastFoodPosition != Vector3.zero && baseState is WanderState)
+        {
+            ((WanderState)baseState).direction = (lastFoodPosition - transform.position).normalized;
+            if (Vector3.Distance(transform.position, lastFoodPosition) < 0.1f) lastFoodPosition = Vector3.zero;
+        }
+    }
 
     private IEnumerator ReleasePheromnes()
     {
@@ -28,11 +37,12 @@ public class AntBio : AntBase
             pheromoneObject.GetComponent<SpriteRenderer>().DOFade(0.0f, pheromoneLifetime).OnComplete(() => Destroy(pheromoneObject));
 
             Pheromone pheromone = pheromoneObject.GetComponent<Pheromone>();
-            if (ant.GetState() is WanderState) pheromone.Init(Pheromone.PheromoneType.Search);
-            else if (ant.GetState() is ReturnState) pheromone.Init(Pheromone.PheromoneType.Return);
+            BaseState baseState = antStateHandler.GetState();
+            if (baseState is WanderState) pheromone.Init(Pheromone.PheromoneType.Search);
+            else if (baseState is ReturnState) pheromone.Init(Pheromone.PheromoneType.Return);
 
             yield return new WaitUntil(() => Vector2.Distance(transform.position, lastPheromonePosition) > pheromoneDistance);
-            lastPheromonePosition = pheromoneObject.transform.position;
+            lastPheromonePosition = transform.position;
         }
     }
 }
