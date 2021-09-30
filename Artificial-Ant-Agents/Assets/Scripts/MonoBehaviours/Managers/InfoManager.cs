@@ -8,6 +8,8 @@ public class InfoManager : Singleton<InfoManager>
     public TMP_Text infoText;
 
     private Camera mainCam;
+    private IInfo info;
+    private RaycastHit2D hit;
 
     public override void Awake()
     {
@@ -17,9 +19,12 @@ public class InfoManager : Singleton<InfoManager>
 
     private void Update()
     {
-        RaycastHit2D hit = Physics2D.Raycast(mainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-        IInfo info = hit.collider?.GetComponent<IInfo>();
-        canvas.SetActive(info != null);
+        if (Input.GetMouseButton(1))
+        {
+            hit = Physics2D.Raycast(mainCam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            info = hit.collider?.GetComponent<IInfo>();
+            canvas.SetActive(info != null);
+        }
 
         if (info != null)
         {

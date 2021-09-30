@@ -1,11 +1,11 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Ant))]
+[RequireComponent(typeof(AntBase))]
 public class AntInfo : MonoBehaviour, IInfo
 {
-    private Ant ant;
+    private AntStateHandler antStateHandler;
 
-    private void Awake() => ant = GetComponent<Ant>();
+    private void Awake() => antStateHandler = GetComponent<AntBase>().antStateHandler;
 
-    public string GetInfo() => $"State: {ant?.GetState()?.ToString()}";
+    public string GetInfo() => $"State: {antStateHandler?.GetState()?.ToString()}";
 }

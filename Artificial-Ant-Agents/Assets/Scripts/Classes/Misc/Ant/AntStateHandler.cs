@@ -1,32 +1,32 @@
-﻿using UnityEngine;
+﻿using System;
 
-public class Ant : MonoBehaviour
+public class AntStateHandler
 {
     private readonly StateMachine stateMachine = new StateMachine();
 
-    public void UpdateState()
+    public void UpdateState(Action OnUpdate = null)
     {
-        stateMachine.Update();
+        stateMachine.Update(OnUpdate);
     }
 
-    public void RequestState(BaseState requestedState)
+    public void RequestState(BaseState requestedState, Action OnDisable = null, Action OnEnable = null)
     {
         if (requestedState is IdleState)
         {
             if (!(stateMachine.currentState is IdleState))
-                stateMachine.ChangeState(requestedState);
+                stateMachine.ChangeState(requestedState, OnDisable, OnEnable);
         }
 
         if (requestedState is WanderState)
         {
             if (!(stateMachine.currentState is WanderState))
-                stateMachine.ChangeState(requestedState);
+                stateMachine.ChangeState(requestedState, OnDisable, OnEnable);
         }
 
         if (requestedState is ReturnState)
         {
             if (!(stateMachine.currentState is ReturnState))
-                stateMachine.ChangeState(requestedState);
+                stateMachine.ChangeState(requestedState, OnDisable, OnEnable);
         }
     }
 

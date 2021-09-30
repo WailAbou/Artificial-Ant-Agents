@@ -1,16 +1,17 @@
+using System;
 using UnityEngine;
 
 public class ReturnState : BaseState
 {
-    public ReturnState(Ant ant, AntBase antBase, Transform transform, Vector2 velocity) : base(ant, antBase, transform, velocity) { }
+    public ReturnState(AntBase antBase, Transform transform, Vector2 velocity) : base(antBase, transform, velocity) { }
 
-    public override void Update()
+    public override void Update(Action OnUpdate)
     {
         Movement();
         CheckNest();
     }
 
-    public override void OnDisable()
+    public override void Disable(Action OnDisable)
     {
         Food food = transform.GetChild(0).GetComponent<Food>();
         food.Drop();
@@ -26,6 +27,6 @@ public class ReturnState : BaseState
     private void CheckNest()
     {
         if (Vector2.Distance(transform.position, antBase.nest.transform.position) < 0.1f)
-            ant.RequestState(new WanderState(ant, antBase, transform, velocity));
+            antStateHandler.RequestState(new WanderState(antBase, transform, velocity));
     }
 }

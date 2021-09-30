@@ -323,10 +323,10 @@ RectTransform:
   m_Father: {fileID: 650116925}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &251552458
 MonoBehaviour:
@@ -375,10 +375,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 44.75
+  m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -684,7 +684,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6498447444649477191, guid: 3393f497fbb3ef446b28034e5d12b7ed, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3393f497fbb3ef446b28034e5d12b7ed, type: 3}
 --- !u!4 &498066480 stripped
 Transform:
@@ -924,7 +925,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 240, y: 135}
+  m_SizeDelta: {x: 350, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &650116926
 MonoBehaviour:
@@ -1340,6 +1341,8 @@ MonoBehaviour:
     holder: {fileID: 862149408}
   - prefab: {fileID: 7329794007570225437, guid: 690a3cacdbae5fe4db6fed019788e87b, type: 3}
     holder: {fileID: 989638543}
+  - prefab: {fileID: 5692436519651116628, guid: 8dafd73a34933a14291f63f46425a653, type: 3}
+    holder: {fileID: 100638361}
 --- !u!1 &1625485171
 GameObject:
   m_ObjectHideFlags: 0
@@ -1932,7 +1935,7 @@ MonoBehaviour:
   dontDestroyOnLoad: 0
   destroyDuplicate: 0
   randomSeed: 0
-  seed: test
+  seed: food
   clusterGroups:
   - cluster: {fileID: 11400000, guid: 236040471ac1d7c4d9f162d4add30edc, type: 2}
     holder: {fileID: 862149408}
@@ -2083,10 +2086,6 @@ PrefabInstance:
       propertyPath: ants.Array.data[0]
       value: 
       objectReference: {fileID: 498066481}
-    - target: {fileID: 7329794007570225433, guid: 690a3cacdbae5fe4db6fed019788e87b, type: 3}
-      propertyPath: ants.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7329794007570225436, guid: 690a3cacdbae5fe4db6fed019788e87b, type: 3}
       propertyPath: m_RootOrder
       value: 0
