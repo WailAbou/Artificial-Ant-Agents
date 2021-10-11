@@ -17,7 +17,9 @@ MonoBehaviour:
   maxClusters: 8
   minClusterSize: 1
   maxClusterSize: 1
-  innerSpread: 1
   minSize: 1
   maxSize: 2
+  innerSpread: 1
   randomRotation: 1
+  respawnTime: 5
+  respawnable: 0

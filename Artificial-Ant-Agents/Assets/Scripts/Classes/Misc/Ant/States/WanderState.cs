@@ -11,7 +11,7 @@ public class WanderState : BaseState
     public override void Update(Action OnUpdate)
     {
         Movement(OnUpdate);
-        CheckFood();
+        ClosestFood();
     }
 
     private void Movement(Action OnUpdate)
@@ -21,14 +21,14 @@ public class WanderState : BaseState
         Move(direction);
     }
 
-    private void CheckFood()
+    private void ClosestFood()
     {
         Func<Food, bool> isNotPickedUp = (food => food.isPickedUp == false);
-        Food food = CheckItem<Food>(1.0f, isNotPickedUp);
+        Food food = ClosestItem<Food, Food>(1.0f, isNotPickedUp);
         if (food != null)
         {
             food.Pickup(transform);
-            antBase.lastFoodPosition = food.transform.position;
+            antBase.lastFood = food;
             antStateHandler.RequestState(new ReturnState(antBase, transform, velocity));
         }
     }

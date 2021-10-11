@@ -9,13 +9,17 @@ public class ReturnState : BaseState
     {
         Movement();
         CheckNest();
+        CheckSpoiled();
     }
 
     public override void Disable(Action OnDisable)
     {
-        Food food = transform.GetChild(0).GetComponent<Food>();
-        food.Drop();
-        antBase.nest.foodCount++;
+        Food food = transform.GetComponentInChildren<Food>();
+        if (food)
+        {
+            food.Drop();
+            antBase.nest.foodCount++;
+        }
     }
 
     private void Movement()
@@ -27,6 +31,12 @@ public class ReturnState : BaseState
     private void CheckNest()
     {
         if (Vector2.Distance(transform.position, antBase.nest.transform.position) < 0.1f)
+            antStateHandler.RequestState(new WanderState(antBase, transform, velocity));
+    }
+
+    private void CheckSpoiled()
+    {
+        if (!transform.GetComponentInChildren<Food>())
             antStateHandler.RequestState(new WanderState(antBase, transform, velocity));
     }
 }

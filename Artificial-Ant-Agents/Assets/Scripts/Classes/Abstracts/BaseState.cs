@@ -25,22 +25,23 @@ public abstract class BaseState
         position = transform.position;
     }
 
-    public virtual void Enable(Action OnEnable) { OnEnable?.Invoke(); }
-    public virtual void Update(Action OnUpdate) { OnUpdate?.Invoke(); }
-    public virtual void Disable(Action OnDisable) { OnDisable?.Invoke(); }
+    public virtual void Enable(Action OnEnable) => OnEnable?.Invoke();
+    public virtual void Update(Action OnUpdate) => OnUpdate?.Invoke();
+    public virtual void Disable(Action OnDisable) => OnDisable?.Invoke();
 
-    protected T CheckItem<T>(float radius = 1.0f, Func<T, bool> filter = null)
+    public T ClosestItem<T, TO>(float radius = 1.0f, Func<T, bool> filter = null, Func<T, TO> order = null)
     {
         filter = filter ?? (T => true);
 
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius);
 
-        Transform[] transforms = colliders
-            .Where(collider => collider.GetComponent<T>() != null)
-            .Where(collider => filter(collider.GetComponent<T>()))
-            .Select(collider => collider.transform).ToArray();
+        colliders = colliders.Where(collider => collider.GetComponent<T>() != null)
+                             .Where(collider => filter(collider.GetComponent<T>())).ToArray();
 
-        Transform closest = transforms.OrderBy(t => Vector3.Distance(transform.position, t.position)).FirstOrDefault();
+        if (order != null) colliders = colliders.OrderBy(collider => order(collider.GetComponent<T>())).ToArray();
+
+        Transform closest = colliders.Select(collider => collider.transform)
+                                     .OrderBy(t => Vector3.Distance(transform.position, t.position)).FirstOrDefault();
 
         return closest != null ? closest.GetComponent<T>() : default(T);
     }

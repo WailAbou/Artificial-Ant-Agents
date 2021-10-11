@@ -1,19 +1,18 @@
 using System.Collections;
 using UnityEngine;
-using DG.Tweening;
+using System;
 
 public class AntBio : AntBase
 {
     public GameObject pheromonePrefab;
-    public float pheromoneDistance = 0.5f;
-    public float pheromoneLifetime = 5.0f;
+    public float pheromoneSpacing = 1.0f;
 
-    private Vector3 lastPheromonePosition;
+    private Pheromone lastPheromone;
+    private bool possibleCluster;
 
     private void Start()
     {
         antStateHandler.RequestState(new WanderState(this, transform, Vector2.zero));
-        lastPheromonePosition = transform.position;
         StartCoroutine(ReleasePheromnes());
     }
 
@@ -22,10 +21,22 @@ public class AntBio : AntBase
     private void OnUpdate()
     {
         BaseState baseState = antStateHandler.GetState();
-        if (lastFoodPosition != Vector3.zero && baseState is WanderState)
+        Func<Pheromone, bool> isReturnType = (pheromone => pheromone.type is Pheromone.Type.Return);
+        Func<Pheromone, float> newestLifeTime = (pheromone => pheromone.lifePercentage);
+        Pheromone pheromone = baseState?.ClosestItem<Pheromone, float>(3.0f, isReturnType, newestLifeTime);
+        if (pheromone != null) possibleCluster = true;
+
+        if (baseState is WanderState && possibleCluster)
         {
-            ((WanderState)baseState).direction = (lastFoodPosition - transform.position).normalized;
-            if (Vector3.Distance(transform.position, lastFoodPosition) < 0.1f) lastFoodPosition = Vector3.zero;
+            if (pheromone?.parent != null)
+            {
+                Vector3 target = (pheromone.transform.position + pheromone.parent.transform.position) / 2;
+                ((WanderState)baseState).direction = (target - transform.position).normalized;
+            }
+            else if (pheromone != null && pheromone.parent == null)
+            {
+                possibleCluster = false;
+            }
         }
     }
 
@@ -34,15 +45,14 @@ public class AntBio : AntBase
         while (true)
         {
             GameObject pheromoneObject = Instantiate(pheromonePrefab, transform.position, transform.rotation);
-            pheromoneObject.GetComponent<SpriteRenderer>().DOFade(0.0f, pheromoneLifetime).OnComplete(() => Destroy(pheromoneObject));
-
             Pheromone pheromone = pheromoneObject.GetComponent<Pheromone>();
             BaseState baseState = antStateHandler.GetState();
-            if (baseState is WanderState) pheromone.Init(Pheromone.PheromoneType.Search);
-            else if (baseState is ReturnState) pheromone.Init(Pheromone.PheromoneType.Return);
 
-            yield return new WaitUntil(() => Vector2.Distance(transform.position, lastPheromonePosition) > pheromoneDistance);
-            lastPheromonePosition = transform.position;
+            if (baseState is WanderState) pheromone.Init(Pheromone.Type.Search, lastPheromone);
+            else if (baseState is ReturnState) pheromone.Init(Pheromone.Type.Return, lastPheromone);
+            lastPheromone = pheromone;
+
+            yield return new WaitUntil(() => Vector2.Distance(transform.position, lastPheromone.transform.position) > pheromoneSpacing);
         }
     }
 }

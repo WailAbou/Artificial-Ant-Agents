@@ -122,4 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70d0a47a285c6f8418b8f2b66296470f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spoilable: 1
+  lifeTime: 20
+  spoilTime: 30
   isPickedUp: 0

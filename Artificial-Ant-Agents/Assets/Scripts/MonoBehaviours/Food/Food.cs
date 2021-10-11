@@ -1,9 +1,8 @@
-using System.Collections;
 using UnityEngine;
 
-public class Food : MonoBehaviour
+public class Food : BaseSpawnable
 {
-    public bool isPickedUp;
+    [HideInInspector] public bool isPickedUp;
 
     public void Pickup(Transform parent)
     {
@@ -11,6 +10,4 @@ public class Food : MonoBehaviour
         transform.SetParent(parent);
         isPickedUp = true;
     }
-
-    public void Drop() => Destroy(gameObject);
 }
