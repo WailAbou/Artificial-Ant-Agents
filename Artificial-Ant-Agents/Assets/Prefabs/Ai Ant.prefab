@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 603646950018349781}
   - component: {fileID: 603646950018349803}
   - component: {fileID: 603646950018349783}
-  m_Layer: 0
+  - component: {fileID: -8691106614781795020}
+  m_Layer: 7
   m_Name: Ai Ant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +111,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.984, y: 1.222}
+  m_Size: {x: 1, y: 1.25}
   m_EdgeRadius: 0
 --- !u!50 &603646950018349781
 Rigidbody2D:
@@ -146,7 +147,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nest: {fileID: 0}
-  lastFoodPosition: {x: 0, y: 0, z: 0}
+  lastFood: {fileID: 0}
+  fov: {fileID: 0}
 --- !u!114 &603646950018349783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,3 +161,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b08a285f3e0664f40ac15e5df443ca27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-8691106614781795020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603646950018349806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14bd912c56346cb408464985d3683b8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 64
+  viewRadius: 3
+  viewAngle: 115
+  meshResolution: 0.5
+  offsetRotation: {x: 0, y: 0, z: 90}
+  debugMode: 0
+  positions: []

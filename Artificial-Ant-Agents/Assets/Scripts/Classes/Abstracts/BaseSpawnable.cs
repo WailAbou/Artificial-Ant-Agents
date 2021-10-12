@@ -22,7 +22,7 @@ public class BaseSpawnable : MonoBehaviour
     public void Drop()
     {
         Destroy(gameObject);
-        cluster.totalAmount -= 1;
+        if (cluster) cluster.totalAmount -= 1;
     }
 
     private void StartSpoiling()

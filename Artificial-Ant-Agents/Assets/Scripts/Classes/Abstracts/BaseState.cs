@@ -12,6 +12,7 @@ public abstract class BaseState
 
     private WorldManager worldManager;
     private Vector2 position;
+    private Vector2 direction;
     private Vector2 desiredDirection;
     private float steerStrenth = 2;
 
@@ -46,7 +47,7 @@ public abstract class BaseState
         return closest != null ? closest.GetComponent<T>() : default(T);
     }
 
-    protected void Move(Vector2 direction, float maxSpeed = 2.0f)
+    protected void Move(float maxSpeed = 2.0f)
     {
         if (worldManager.OutBounds(transform.position)) direction = (Vector2.zero - (Vector2)transform.position);
 
@@ -61,5 +62,11 @@ public abstract class BaseState
 
         float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg - 90;
         transform.SetPositionAndRotation(position, Quaternion.Euler(0, 0, angle));
+    }
+
+    public void SetDirection(Vector3 desiredDirection)
+    {
+        direction = desiredDirection;
+        //TODO: implement this method antBase.fov.ClosestFree() 
     }
 }

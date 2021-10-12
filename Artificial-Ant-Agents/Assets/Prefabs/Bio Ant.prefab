@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 6498447444649477240}
   - component: {fileID: -3148363156569042866}
   - component: {fileID: 6498447444649477242}
-  m_Layer: 0
+  - component: {fileID: -5311384657315344897}
+  m_Layer: 7
   m_Name: Bio Ant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +111,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.984, y: 1.222}
+  m_Size: {x: 1, y: 1.25}
   m_EdgeRadius: 0
 --- !u!50 &6498447444649477240
 Rigidbody2D:
@@ -161,3 +162,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b08a285f3e0664f40ac15e5df443ca27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-5311384657315344897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6498447444649477187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14bd912c56346cb408464985d3683b8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 64
+  ignoreMask:
+    serializedVersion: 2
+    m_Bits: 128
+  viewRadius: 3
+  viewAngle: 115
+  offsetRotation: {x: 0, y: 0, z: 90}

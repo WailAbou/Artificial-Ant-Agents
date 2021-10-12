@@ -31,7 +31,8 @@ public class AntBio : AntBase
             if (pheromone?.parent != null)
             {
                 Vector3 target = (pheromone.transform.position + pheromone.parent.transform.position) / 2;
-                ((WanderState)baseState).direction = (target - transform.position).normalized;
+                Vector3 desiredDirection = (target - transform.position).normalized;
+                baseState.SetDirection(desiredDirection);
             }
             else if (pheromone != null && pheromone.parent == null)
             {

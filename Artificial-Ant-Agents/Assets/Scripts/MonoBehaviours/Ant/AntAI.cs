@@ -9,10 +9,11 @@ public class AntAI : AntBase
     private void OnUpdate()
     {
         BaseState baseState = antStateHandler.GetState();
-        if (lastFood != null && baseState is WanderState)
+        if (lastFoodPosition != Vector3.zero && baseState is WanderState)
         {
-            ((WanderState)baseState).direction = (lastFood.transform.position - transform.position).normalized;
-            if (Vector3.Distance(transform.position, lastFood.transform.position) < 0.1f) lastFood.transform.position = Vector3.zero;
+            Vector3 desiredDirection = (lastFoodPosition - transform.position).normalized;
+            baseState.SetDirection(desiredDirection);
+            if (Vector3.Distance(transform.position, lastFoodPosition) < 0.1f) lastFoodPosition = Vector3.zero;
         }
     }
 }

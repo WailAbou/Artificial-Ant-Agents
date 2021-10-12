@@ -640,6 +640,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bio Ant
       objectReference: {fileID: 0}
+    - target: {fileID: 6498447444649477187, guid: 3393f497fbb3ef446b28034e5d12b7ed, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6498447444649477189, guid: 3393f497fbb3ef446b28034e5d12b7ed, type: 3}
       propertyPath: m_RootOrder
       value: 0
