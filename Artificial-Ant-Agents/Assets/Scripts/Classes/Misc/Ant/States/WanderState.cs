@@ -14,8 +14,8 @@ public class WanderState : BaseState
 
     private void Movement(Action OnUpdate)
     {
-        Vector3 desiredDirection = Random.insideUnitCircle * wanderStrength;
-        SetDirection(desiredDirection);
+        Vector3 targetDirection = Random.insideUnitCircle * wanderStrength;
+        SetDirection(targetDirection);
         OnUpdate?.Invoke();
         Move();
     }

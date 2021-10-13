@@ -1,13 +1,15 @@
+using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
 
 public abstract class BaseState
 {
+    public Vector2 velocity;
+
     protected AntStateHandler antStateHandler;
     protected AntBase antBase;
     protected Transform transform;
-    protected Vector2 velocity;
     protected float wanderStrength = 0.1f;
 
     private WorldManager worldManager;
@@ -30,7 +32,7 @@ public abstract class BaseState
     public virtual void Update(Action OnUpdate) => OnUpdate?.Invoke();
     public virtual void Disable(Action OnDisable) => OnDisable?.Invoke();
 
-    public T ClosestItem<T, TO>(float radius = 1.0f, Func<T, bool> filter = null, Func<T, TO> order = null)
+    public List<T> ClosestItems<T, TO>(float radius = 1.0f, Func<T, bool> filter = null, Func<T, TO> order = null) where T : Component
     {
         filter = filter ?? (T => true);
 
@@ -41,10 +43,18 @@ public abstract class BaseState
 
         if (order != null) colliders = colliders.OrderBy(collider => order(collider.GetComponent<T>())).ToArray();
 
-        Transform closest = colliders.Select(collider => collider.transform)
-                                     .OrderBy(t => Vector3.Distance(transform.position, t.position)).FirstOrDefault();
+        List<Transform> all = colliders.Select(collider => collider.transform)
+                                    .OrderBy(t => Vector3.Distance(transform.position, t.position)).ToList();
 
-        return closest != null ? closest.GetComponent<T>() : default(T);
+        return all.Select(t => t.GetComponent<T>()).ToList();
+    }
+
+    public T ClosestItem<T, TO>(float radius = 1.0f, Func<T, bool> filter = null, Func<T, TO> order = null) where T : Component
+    {
+        T closest = ClosestItems<T, TO>(radius, filter, order)
+                                .OrderBy(c => Vector3.Distance(transform.position, c.transform.position)).FirstOrDefault();
+
+        return closest;
     }
 
     protected void Move(float maxSpeed = 2.0f)
@@ -52,7 +62,6 @@ public abstract class BaseState
         if (worldManager.OutBounds(transform.position)) direction = (Vector2.zero - (Vector2)transform.position);
 
         desiredDirection = (desiredDirection + direction).normalized;
-
         Vector2 desiredVelocity = desiredDirection * maxSpeed;
         Vector2 desiredSteeringForce = (desiredVelocity - velocity) * steerStrenth;
         Vector2 acceleration = Vector2.ClampMagnitude(desiredSteeringForce, steerStrenth);
@@ -64,9 +73,8 @@ public abstract class BaseState
         transform.SetPositionAndRotation(position, Quaternion.Euler(0, 0, angle));
     }
 
-    public void SetDirection(Vector3 desiredDirection)
+    public void SetDirection(Vector3 newDirection)
     {
-        direction = desiredDirection;
-        //TODO: implement this method antBase.fov.ClosestFree() 
+        direction = antBase.fov.ClosestFree(newDirection);
     }
 }

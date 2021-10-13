@@ -147,7 +147,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nest: {fileID: 0}
-  lastFood: {fileID: 0}
+  fov: {fileID: 0}
+  lastFoodPosition: {x: 0, y: 0, z: 0}
   pheromonePrefab: {fileID: 8278626898088504267, guid: c9ba8cc4f91e3fc4faef15fd5fd36226, type: 3}
   pheromoneSpacing: 1
 --- !u!114 &6498447444649477242
@@ -177,9 +178,9 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 64
-  ignoreMask:
-    serializedVersion: 2
-    m_Bits: 128
   viewRadius: 3
   viewAngle: 115
+  meshResolution: 0.5
   offsetRotation: {x: 0, y: 0, z: 90}
+  debugMesh: 0
+  debugLines: 0

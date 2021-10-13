@@ -24,8 +24,8 @@ public class ReturnState : BaseState
 
     private void Movement()
     {
-        Vector3 desiredDirection = (antBase.nest.transform.position - transform.position).normalized;
-        SetDirection(desiredDirection);
+        Vector3 targetDirection = (antBase.nest.transform.position - transform.position).normalized;
+        SetDirection(targetDirection);
         Move(1.5f);
     }
 

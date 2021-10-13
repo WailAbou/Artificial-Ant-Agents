@@ -5,51 +5,31 @@ using UnityEngine;
 public class FovGraphics : MonoBehaviour
 {
     private FovMechanics fov;
-    private Transform parent;
     private Mesh mesh;
-    private Vector3[] vertices;
-    private int[] triangles;
-    private int stepCount;
 
-    private void Start()
+    public void Init(Transform parent, FovMechanics fov)
     {
-        fov = GetComponentInParent<FovMechanics>();
-        parent = fov.transform;
+        transform.SetParent(parent);
+        transform.position = parent.position;
         mesh = GetComponent<MeshFilter>().mesh;
+        GetComponent<MeshRenderer>().material.SetColor("_UnlitColor", new Color(0.0f, 0.0f, 0.0f, 150.0f));
+        this.fov = fov;
     }
 
-    private void LateUpdate()
+    public void UpdateGraphics(List<Vector3> positions)
     {
-        fov.positions = CastRays();
-        if (fov.debugMode)
+        if (positions.Count > 0)
         {
-            DrawMesh(fov.positions);
-            DrawLines(fov.positions);
+            if (fov.debugMesh) DrawMesh(positions);
+            if (fov.debugLines) DrawLines(positions);
         }
-    }
-
-    private List<Vector3> CastRays()
-    {
-        List<Vector3> positions = new List<Vector3>();
-
-        stepCount = Mathf.RoundToInt(fov.viewAngle * fov.meshResolution);
-        float stepAngle = fov.viewAngle / stepCount;
-        for (int i = 0; i < stepCount; i++)
-        {
-            float angle = parent.eulerAngles.y - fov.viewAngle / 2 + stepAngle * i;
-            Vector3 dir = parent.rotation * Quaternion.Euler(fov.offsetRotation) * fov.DirFromAngle(angle);
-            RaycastHit2D hit = Physics2D.Raycast(parent.position, dir, fov.viewRadius, fov.obstacleMask);
-            positions.Add(parent.position + dir.normalized * (hit.collider ? hit.distance : fov.viewRadius));
-        }
-
-        return positions;
     }
 
     private void DrawMesh(List<Vector3> positions)
     {
         int vertexCount = positions.Count + 1;
-        vertices = new Vector3[vertexCount];
-        triangles = new int[(vertexCount - 2) * 3];
+        Vector3[] vertices = new Vector3[vertexCount];
+        int[] triangles = new int[(vertexCount - 2) * 3];
         vertices[0] = Vector3.zero;
         for (int i = 0; i < vertexCount - 1; i++)
         {
