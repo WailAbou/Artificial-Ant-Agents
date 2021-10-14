@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class AntAI : AntBase
 {
-    public BaseState nextState;
-
     private void Start() => antStateHandler.RequestState(new WanderState(this, transform, Vector2.zero));
 
     private void Update() => antStateHandler.UpdateState(OnUpdate);

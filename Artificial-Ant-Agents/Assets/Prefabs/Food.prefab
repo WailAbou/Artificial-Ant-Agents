@@ -123,6 +123,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spoilable: 1
-  lifeTime: 20
-  spoilTime: 30
+  lifeTime: 50
+  spoilTime: 25
   isPickedUp: 0
